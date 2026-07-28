@@ -54,3 +54,9 @@ module "linux_virtual_machine" {
   source     = "../../modules/az_VM"
   vm_linux   = var.vm_linux
 }
+
+module "load_balancer" {
+  depends_on = [module.virtual_network , module.public_ip , module.linux_virtual_machine]
+  source =  "../../modules/az_LB"
+  lb = var.lb
+}
