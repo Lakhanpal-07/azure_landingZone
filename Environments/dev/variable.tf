@@ -127,3 +127,26 @@ variable "nsg_map" {
     }))
   }))
 }
+
+variable "lb" {
+  type = map(object({
+    name                                   = string
+    location                               = string
+    resource_group_name                    = string
+    sku                                    = string
+    frontend_ip_configuration_name         = string
+    backend_pool_name                      = string
+    public_ip_name                         = string
+    lb_probe_name                          = string
+    lb_probe_protocol                      = string
+    network_interface_name                 = string
+    lb_probe_port                          = number
+    lb_rule_name                           = string
+    lb_rule_protocol                       = string
+    lb_rule_frontend_port                  = number
+    lb_rule_backend_port                   = number
+    lb_rule_frontend_ip_configuration_name = string
+    frontend_assoc_ip_configuration_name   = string
+    backend_assoc_ip_configuration_name    = string
+  }))
+}

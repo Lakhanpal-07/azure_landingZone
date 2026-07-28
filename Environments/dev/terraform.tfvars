@@ -83,7 +83,13 @@ pip = {
     resource_group_name = "rg_dev001"
     allocation_method   = "Static"
     sku                 = "Standard"
-
+  }
+  lb_pip = {
+    name                = "lb_pip"
+    location            = "Central India"
+    resource_group_name = "rg_dev001"
+    allocation_method   = "Static"
+    sku                 = "Standard"
   }
 }
 
@@ -207,7 +213,7 @@ nsg_map = {
         source_address_prefix      = "*"
         destination_address_prefix = "*"
       },
-       {
+      {
         name                       = "Allowssh"
         priority                   = 200
         direction                  = "Inbound"
@@ -272,5 +278,29 @@ nsg_map = {
         destination_address_prefix = "*"
       },
     ]
+  }
+}
+
+
+lb = {
+  "dev-lb" = {
+    name                                   = "external-lb"
+    location                               = "Central India"
+    resource_group_name                    = "rg_dev001"
+    sku                                    = "Standard"
+    frontend_ip_configuration_name         = "lb-frontend"
+    backend_pool_name                      = "backend-pool"
+    public_ip_name                         = "lb_pip"
+    lb_probe_name                          = "http-probe"
+    lb_probe_protocol                      = "Tcp"
+    network_interface_name                 = "frontendnic"
+    lb_probe_port                          = 80
+    lb_rule_name                           = "http-rule"
+    lb_rule_protocol                       = "Tcp"
+    lb_rule_frontend_port                  = 80
+    lb_rule_backend_port                   = 80
+    lb_rule_frontend_ip_configuration_name = "lb-frontend"
+    frontend_assoc_ip_configuration_name   = "frontend_internal"
+    backend_assoc_ip_configuration_name    = "backend_internal"
   }
 }
