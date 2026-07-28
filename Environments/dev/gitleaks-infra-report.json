@@ -1,0 +1,42 @@
+[
+ {
+  "RuleID": "generic-terraform-password",
+  "Description": "Hardcoded password found in Terraform configuration",
+  "StartLine": 160,
+  "EndLine": 160,
+  "StartColumn": 6,
+  "EndColumn": 53,
+  "Match": "admin_password                  = \"devops@12345\"",
+  "Secret": "admin_password",
+  "File": "terraform.tfvars",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 3.3787835,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "terraform.tfvars:generic-terraform-password:160"
+ },
+ {
+  "RuleID": "generic-terraform-password",
+  "Description": "Hardcoded password found in Terraform configuration",
+  "StartLine": 177,
+  "EndLine": 177,
+  "StartColumn": 6,
+  "EndColumn": 53,
+  "Match": "admin_password                  = \"devops@12345\"",
+  "Secret": "admin_password",
+  "File": "terraform.tfvars",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 3.3787835,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "terraform.tfvars:generic-terraform-password:177"
+ }
+]

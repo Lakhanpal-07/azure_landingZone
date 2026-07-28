@@ -43,6 +43,12 @@ module "network_interface_card" {
   nic        = var.nic
 }
 
+module "network_security_group" {
+  depends_on = [module.subnets , module.resource_group , module.virtual_network]
+  source = "../../modules/az_NSG"
+  nsg = var.nsg_map
+}
+
 module "linux_virtual_machine" {
   depends_on = [module.subnets, module.network_interface_card]
   source     = "../../modules/az_VM"

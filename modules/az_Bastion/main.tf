@@ -3,6 +3,7 @@ variable "Bastion" {
     name                  = string
     location              = string
     resource_group_name   = string
+    sku                   = string
     virtual_network_name  = string
     subnet_name           = string
     public_ip_name        = string
@@ -17,6 +18,7 @@ resource "azurerm_bastion_host" "Bastion" {
   name                = each.value.name
   location            = each.value.location
   resource_group_name = each.value.resource_group_name
+  sku                 = each.value.sku
 
   ip_configuration {
     name                 = each.value.ip_configuration_name

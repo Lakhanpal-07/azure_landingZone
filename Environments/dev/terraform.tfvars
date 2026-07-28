@@ -92,6 +92,7 @@ Bastion = {
     name                  = "Bastion_Host"
     location              = "Central India"
     resource_group_name   = "rg_dev001"
+    sku                   = "Standard"
     virtual_network_name  = "vnet_dev001"
     subnet_name           = "AzureBastionSubnet"
     public_ip_name        = "Bastion_pip"
@@ -154,7 +155,7 @@ vm_linux = {
     name                            = "vmlinuxfrontend"
     location                        = "Central India"
     resource_group_name             = "rg_dev001"
-    size                            = "Standard_B1s"
+    size                            = "Standard_B2ats_v2"
     admin_username                  = "Devops"
     admin_password                  = "devops@12345"
     disable_password_authentication = "false"
@@ -162,16 +163,16 @@ vm_linux = {
     os_disk_name                    = "frontend-osdisk"
     caching                         = "ReadWrite"
     storage_account_type            = "Standard_LRS"
-    publisher                       = "Canonical"
-    offer                           = "ubuntu-24_04-lts"  
-    sku                             = "server"
+    publisher                       = "debian"
+    offer                           = "debian-12"
+    sku                             = "12-gen2"
     version                         = "latest"
   }
   vmlinuxbackenend = {
     name                            = "vmlinuxbackendend"
     location                        = "Central India"
     resource_group_name             = "rg_dev001"
-    size                            = "Standard_B1s"
+    size                            = "Standard_B2ats_v2"
     admin_username                  = "Devops"
     admin_password                  = "devops@12345"
     disable_password_authentication = "false"
@@ -179,9 +180,97 @@ vm_linux = {
     os_disk_name                    = "backend-osdisk"
     caching                         = "ReadWrite"
     storage_account_type            = "Standard_LRS"
-    publisher                       = "Canonical"
-    offer                           = "ubuntu-24_04-lts"  
-    sku                             = "server"
+    publisher                       = "debian"
+    offer                           = "debian-12"
+    sku                             = "12-gen2"
     version                         = "latest"
+  }
+}
+
+
+nsg_map = {
+  nsg_frontend_dev = {
+    name                 = "nsg_frontend_dev"
+    location             = "Central India"
+    resource_group_name  = "rg_dev001"
+    subnet_name          = "frontend_subnet"
+    virtual_network_name = "vnet_dev001"
+    rules = [
+      {
+        name                       = "AllowHTTP"
+        priority                   = 100
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        destination_port_range     = "80"
+        source_port_range          = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },
+       {
+        name                       = "Allowssh"
+        priority                   = 200
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        destination_port_range     = "22"
+        source_port_range          = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      }
+    ]
+  }
+
+  nsg_backend_dev = {
+    name                 = "nsg_backend_dev"
+    location             = "Central India"
+    resource_group_name  = "rg_dev001"
+    subnet_name          = "backend_subnet"
+    virtual_network_name = "vnet_dev001"
+    rules = [
+      {
+        name                       = "Allowssh"
+        priority                   = 200
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        destination_port_range     = "22"
+        source_port_range          = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },
+      {
+        name                       = "AllowHTTP"
+        priority                   = 100
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        destination_port_range     = "80"
+        source_port_range          = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      }
+    ]
+  }
+
+  nsg_admin_dev = {
+    name                 = "nsg_admin_dev"
+    location             = "Central India"
+    resource_group_name  = "rg_dev001"
+    subnet_name          = "frontend_subnet"
+    virtual_network_name = "vnet_dev001"
+    rules = [
+      {
+        name                       = "AllowSSH"
+        priority                   = 300
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        destination_port_range     = "22"
+        source_port_range          = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },
+    ]
   }
 }

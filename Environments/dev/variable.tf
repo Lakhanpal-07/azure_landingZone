@@ -39,6 +39,7 @@ variable "Bastion" {
     name                  = string
     location              = string
     resource_group_name   = string
+    sku                   = string
     virtual_network_name  = string
     subnet_name           = string
     public_ip_name        = string
@@ -99,5 +100,30 @@ variable "vm_linux" {
     offer                           = string
     sku                             = string
     version                         = string
+  }))
+}
+
+# variable "nsg_map" {
+#   type = map(any)
+# }
+
+variable "nsg_map" {
+  type = map(object({
+    name                 = string
+    location             = string
+    resource_group_name  = string
+    subnet_name          = string
+    virtual_network_name = string
+    rules = list(object({
+      name                       = string
+      priority                   = number
+      direction                  = string
+      access                     = string
+      protocol                   = string
+      destination_port_range     = string
+      source_port_range          = string
+      source_address_prefix      = string
+      destination_address_prefix = string
+    }))
   }))
 }
