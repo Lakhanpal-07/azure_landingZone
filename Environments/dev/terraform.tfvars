@@ -187,7 +187,7 @@ vm_linux = {
   }
 }
 
-
+# nsg map assignments
 nsg_map = {
   nsg_frontend_dev = {
     name                 = "nsg_frontend_dev"
