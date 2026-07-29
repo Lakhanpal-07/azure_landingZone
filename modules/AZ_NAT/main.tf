@@ -10,10 +10,10 @@ variable "nat" {
 }
 variable "nat_subnet_associations" {
   type = map(object({
-    subnet_name         = string
-    virtual_network_name  = string
-    resource_group_name = string
-    nat_key             = string
+    subnet_name          = string
+    virtual_network_name = string
+    resource_group_name  = string
+    nat_key              = string
   }))
 }
 
