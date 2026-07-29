@@ -1,7 +1,9 @@
 .terraform.lock.hcl
 tflint-report.json
 trufflehog-config.yaml
+.tflint.hcl
 .gitleaks.toml
+trufflehog-config.yaml
 
 # Local .terraform directories
 .terraform/
