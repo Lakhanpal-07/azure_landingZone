@@ -1,9 +1,11 @@
+# Terraform lock and reports
 .terraform.lock.hcl
 tflint-report.json
-trufflehog-config.yaml
 .tflint.hcl
-.gitleaks.toml
+
+# Security and scanning configs
 trufflehog-config.yaml
+.gitleaks.toml
 
 # Local .terraform directories
 .terraform/
