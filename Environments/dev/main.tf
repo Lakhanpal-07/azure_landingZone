@@ -46,9 +46,9 @@ module "network_interface_card" {
 }
 
 module "network_security_group" {
-  depends_on = [module.subnets , module.resource_group , module.virtual_network]
-  source = "../../modules/az_NSG"
-  nsg = var.nsg_map
+  depends_on = [module.subnets, module.resource_group, module.virtual_network]
+  source     = "../../modules/az_NSG"
+  nsg        = var.nsg_map
 }
 
 module "linux_virtual_machine" {
@@ -58,7 +58,13 @@ module "linux_virtual_machine" {
 }
 
 module "load_balancer" {
-  depends_on = [module.virtual_network , module.public_ip , module.linux_virtual_machine]
-  source =  "../../modules/az_LB"
-  lb = var.lb
+  depends_on = [module.virtual_network, module.public_ip, module.linux_virtual_machine]
+  source     = "../../modules/az_LB"
+  lb         = var.lb
+}
+
+module "application_gateway" {
+  depends_on = [module.subnets, module.public_ip]
+  source     = "../../modules/az_APPGw"
+  appgw      = var.appgw
 }
