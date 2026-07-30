@@ -12,12 +12,12 @@ vnets = {
     resource_group_name = "rg_dev001"
     address_space       = ["10.123.0.0/16"]
   }
-  vnet_dev002 = {
-    name                = "vnet_dev002"
-    location            = "Central India"
-    resource_group_name = "rg_dev001"
-    address_space       = ["10.124.0.0/16"]
-  }
+  # vnet_dev002 = {
+  #   name                = "vnet_dev002"
+  #   location            = "Central India"
+  #   resource_group_name = "rg_dev001"
+  #   address_space       = ["10.124.0.0/16"]
+  # }
 }
 
 subnets = {
@@ -39,18 +39,18 @@ subnets = {
     resource_group_name  = "rg_dev001"
     address_prefixes     = ["10.123.3.0/26"]
   }
-  appgwSubnet = {
-    name                 = "appgwSubnet"
-    virtual_network_name = "vnet_dev001"
-    resource_group_name  = "rg_dev001"
-    address_prefixes     = ["10.123.4.0/24"]
-  }
-  frontend_subnet02 = {
-    name                 = "frontend_subnet"
-    virtual_network_name = "vnet_dev002"
-    resource_group_name  = "rg_dev001"
-    address_prefixes     = ["10.124.1.0/24"]
-  }
+  # appgwSubnet = {
+  #   name                 = "appgwSubnet"
+  #   virtual_network_name = "vnet_dev001"
+  #   resource_group_name  = "rg_dev001"
+  #   address_prefixes     = ["10.123.4.0/24"]
+  # }
+  # frontend_subnet02 = {
+  #   name                 = "frontend_subnet"
+  #   virtual_network_name = "vnet_dev002"
+  #   resource_group_name  = "rg_dev001"
+  #   address_prefixes     = ["10.124.1.0/24"]
+  # }
 
 }
 
@@ -91,13 +91,13 @@ pip = {
     allocation_method   = "Static"
     sku                 = "Standard"
   }
-  appgw_pip = {
-    name                = "appgw_pip"
-    location            = "Central India"
-    resource_group_name = "rg_dev001"
-    allocation_method   = "Static"
-    sku                 = "Standard"
-  }
+  # appgw_pip = {
+  #   name                = "appgw_pip"
+  #   location            = "Central India"
+  #   resource_group_name = "rg_dev001"
+  #   allocation_method   = "Static"
+  #   sku                 = "Standard"
+  # }
 }
 
 Bastion = {
@@ -147,6 +147,7 @@ nic = {
     subnet_name          = "frontend_subnet"
     # public_ip_name       = "frontendnic_pip"
 
+    frontend_nic_key                               = "frontendnic"
     ip_configuration_name                          = "frontend_internal"
     ip_configuration_private_ip_address_allocation = "Dynamic"
   }
@@ -158,6 +159,8 @@ nic = {
     subnet_name          = "backend_subnet"
     # public_ip_name       = "backendnic_pip"
 
+
+    backend_nic_key                                = "backendnic"
     ip_configuration_name                          = "backend_internal"
     ip_configuration_private_ip_address_allocation = "Dynamic"
   }
@@ -265,27 +268,6 @@ nsg_map = {
       }
     ]
   }
-
-  nsg_admin_dev = {
-    name                 = "nsg_admin_dev"
-    location             = "Central India"
-    resource_group_name  = "rg_dev001"
-    subnet_name          = "frontend_subnet"
-    virtual_network_name = "vnet_dev001"
-    rules = [
-      {
-        name                       = "AllowSSH"
-        priority                   = 300
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        destination_port_range     = "22"
-        source_port_range          = "*"
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
-      },
-    ]
-  }
 }
 
 
@@ -301,6 +283,8 @@ lb = {
     lb_probe_name                          = "http-probe"
     lb_probe_protocol                      = "Tcp"
     network_interface_name                 = "frontendnic"
+    frontend_nic_key                       = "frontendnic"
+    backend_nic_key                        = "backendnic"
     lb_probe_port                          = 80
     lb_rule_name                           = "http-rule"
     lb_rule_protocol                       = "Tcp"
@@ -312,33 +296,33 @@ lb = {
   }
 }
 
-appgw = {
-  dev_appgw = {
-    name                           = "appgw_dev001"
-    location                       = "Central India"
-    resource_group_name            = "rg_dev001"
-    sku_name                       = "Standard_v2"
-    sku_tier                       = "Standard_v2"
-    sku_capacity                   = 2
-    gateway_ip_configuration_name  = "appgw-gw-ip-config"
-    virtual_network_name           = "vnet_dev001"
-    subnet_name                    = "appgwSubnet"
-    frontend_port_name             = "appgw-frontend-port"
-    frontend_port                  = 80
-    frontend_ip_configuration_name = "appgw-frontend-ip-config"
-    public_ip_name                 = "appgw_pip"
-    backend_address_pool_name      = "appgw-backend-pool"
-    backend_ip_addresses           = ["10.123.1.4", "10.123.2.4"]
-    backend_http_settings_name     = "appgw-http-settings"
-    cookie_based_affinity          = "Disabled"
-    http_settings_port             = 80
-    http_settings_protocol         = "Http"
-    request_timeout                = 60
-    http_listener_name             = "appgw-listener"
-    listener_protocol              = "Http"
-    request_routing_rule_name      = "appgw-routing-rule"
-    rule_type                      = "Basic"
-    priority                       = 100
-  }
-}
+# appgw = {
+#   dev_appgw = {
+#     name                           = "appgw_dev001"
+#     location                       = "Central India"
+#     resource_group_name            = "rg_dev001"
+#     sku_name                       = "Standard_v2"
+#     sku_tier                       = "Standard_v2"
+#     sku_capacity                   = 2
+#     gateway_ip_configuration_name  = "appgw-gw-ip-config"
+#     virtual_network_name           = "vnet_dev001"
+#     subnet_name                    = "appgwSubnet"
+#     frontend_port_name             = "appgw-frontend-port"
+#     frontend_port                  = 80
+#     frontend_ip_configuration_name = "appgw-frontend-ip-config"
+#     public_ip_name                 = "appgw_pip"
+#     backend_address_pool_name      = "appgw-backend-pool"
+#     backend_ip_addresses           = ["10.123.1.4", "10.123.2.4"]
+#     backend_http_settings_name     = "appgw-http-settings"
+#     cookie_based_affinity          = "Disabled"
+#     http_settings_port             = 80
+#     http_settings_protocol         = "Http"
+#     request_timeout                = 60
+#     http_listener_name             = "appgw-listener"
+#     listener_protocol              = "Http"
+#     request_routing_rule_name      = "appgw-routing-rule"
+#     rule_type                      = "Basic"
+#     priority                       = 100
+#   }
+# }
 

@@ -17,6 +17,8 @@ variable "lb" {
     lb_rule_frontend_port                  = number
     lb_rule_backend_port                   = number
     lb_rule_frontend_ip_configuration_name = string
+    frontend_nic_key                       = string
+    backend_nic_key                        = string
     frontend_assoc_ip_configuration_name   = string
     backend_assoc_ip_configuration_name    = string
 
@@ -67,14 +69,14 @@ resource "azurerm_lb_rule" "http_rule" {
 
 resource "azurerm_network_interface_backend_address_pool_association" "frontend_assoc" {
   for_each                = var.lb
-  network_interface_id    = data.azurerm_network_interface.fetch_nic[each.key].id
+  network_interface_id    = data.azurerm_network_interface.fetch_nic["${each.key}_frontend"].id
   ip_configuration_name   = each.value.frontend_assoc_ip_configuration_name
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_pool[each.key].id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "backend_assoc" {
   for_each                = var.lb
-  network_interface_id    = data.azurerm_network_interface.fetch_nic[each.key].id
+  network_interface_id    = data.azurerm_network_interface.fetch_nic["${each.key}_backend"].id
   ip_configuration_name   = each.value.backend_assoc_ip_configuration_name
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_pool[each.key].id
 }

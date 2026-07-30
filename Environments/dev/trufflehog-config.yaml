@@ -1,6 +1,0 @@
-rules:
-  - name: generic-terraform-password
-    detectors:
-      - custom
-    regex:
-      raw: '(?i)(admin_password|password|secret)\s*=\s*"[^"]+"'
