@@ -63,8 +63,8 @@ module "load_balancer" {
   lb         = var.lb
 }
 
-module "application_gateway" {
-  depends_on = [module.subnets, module.public_ip]
-  source     = "../../modules/az_APPGw"
-  appgw      = var.appgw
-}
+# module "application_gateway" {
+#   depends_on = [module.subnets, module.public_ip]
+#   source     = "../../modules/az_APPGw"
+#   appgw      = var.appgw
+# }

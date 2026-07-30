@@ -9,7 +9,7 @@ terraform {
     resource_group_name  = "tfstate"
     storage_account_name = "tfstatejylu2026"
     container_name       = "statecon"
-    key                  = "terraform.devstate"
+    key                  = "terraform01.devstate"
 
   }
 }
