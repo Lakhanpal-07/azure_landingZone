@@ -6,6 +6,19 @@ module "resource_group" {
 
 }
 
+module "key_vault" {
+  depends_on = [module.resource_group]
+  source     = "../../modules/az_keyVault"
+  kv         = var.kv
+}
+
+module "azure_sql" {
+  depends_on    = [module.resource_group]
+  source        = "../../modules/az_sql"
+  sql_servers   = var.sql_servers
+  sql_databases = var.sql_databases
+}
+
 module "virtual_network" {
   depends_on = [module.resource_group]
   source     = "../../modules/az_vnets"
