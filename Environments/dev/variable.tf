@@ -5,6 +5,82 @@ variable "rgs" {
   }))
 }
 
+variable "kv" {
+  type = map(object({
+    name                            = string
+    location                        = string
+    resource_group_name             = string
+    sku_name                        = string
+    tenant_id                       = optional(string)
+    soft_delete_retention_days      = optional(number)
+    purge_protection_enabled        = optional(bool)
+    enabled_for_disk_encryption     = optional(bool)
+    enabled_for_deployment          = optional(bool)
+    enabled_for_template_deployment = optional(bool)
+    public_network_access_enabled   = optional(bool)
+    enable_rbac_authorization       = optional(bool)
+  }))
+  default = {
+    keyvault_dev001 = {
+      name                = "kv-dev001-jylu2026"
+      location            = "Central India"
+      resource_group_name = "rg_dev001"
+      sku_name            = "standard"
+    }
+  }
+}
+
+variable "sql_servers" {
+  type = map(object({
+    name                          = string
+    location                      = string
+    resource_group_name           = string
+    version                       = string
+    administrator_login           = string
+    administrator_login_password  = string
+    minimum_tls_version           = optional(string)
+    public_network_access_enabled = optional(bool)
+  }))
+  default = {
+    sqlserver_dev001 = {
+      name                          = "sqlsrv-dev001-jylu2026"
+      location                      = "Central India"
+      resource_group_name           = "rg_dev001"
+      version                       = "12.0"
+      administrator_login           = "sqladminuser"
+      administrator_login_password  = "SqlAdmin123!"
+      minimum_tls_version           = "1.2"
+      public_network_access_enabled = true
+    }
+  }
+}
+
+variable "sql_databases" {
+  type = map(object({
+    name                        = string
+    server_key                  = string
+    resource_group_name         = string
+    sku_name                    = string
+    max_size_gb                 = optional(number)
+    zone_redundant              = optional(bool)
+    collation                   = optional(string)
+    create_mode                 = optional(string)
+    license_type                = optional(string)
+    auto_pause_delay_in_minutes = optional(number)
+  }))
+  default = {
+    sqldb_dev001 = {
+      name                = "sqldb-dev001"
+      server_key          = "sqlserver_dev001"
+      resource_group_name = "rg_dev001"
+      sku_name            = "Basic"
+      max_size_gb         = 2
+      collation           = "SQL_Latin1_General_CP1_CI_AS"
+      create_mode         = "Default"
+    }
+  }
+}
+
 variable "vnets" {
   type = map(object({
     name                = string
