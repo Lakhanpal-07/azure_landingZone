@@ -13,7 +13,7 @@ variable "kv" {
     enabled_for_deployment          = optional(bool)
     enabled_for_template_deployment = optional(bool)
     public_network_access_enabled   = optional(bool)
-    enable_rbac_authorization       = optional(bool)
+    rbac_authorization_enabled      = optional(bool)
   }))
 }
 
@@ -31,5 +31,5 @@ resource "azurerm_key_vault" "kv" {
   enabled_for_deployment          = each.value.enabled_for_deployment != null ? each.value.enabled_for_deployment : false
   enabled_for_template_deployment = each.value.enabled_for_template_deployment != null ? each.value.enabled_for_template_deployment : false
   public_network_access_enabled   = each.value.public_network_access_enabled != null ? each.value.public_network_access_enabled : true
-  enable_rbac_authorization       = each.value.enable_rbac_authorization != null ? each.value.enable_rbac_authorization : true
+  rbac_authorization_enabled      = each.value.rbac_authorization_enabled != null ? each.value.rbac_authorization_enabled : true
 }
